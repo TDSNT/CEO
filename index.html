@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#080808">
-  <meta name="description" content="TDSNT_은율님명함">
+  <meta name="description" content="TDSNT_윤아님명함">
   <meta name="color-scheme" content="dark">
 
   <title>TDSNT_은율님명함</title>
@@ -258,62 +258,41 @@
     .logo {
       position: relative;
 
-      width: 62px;
-      height: 62px;
+      width: 82px;
+      height: 82px;
 
       margin: 0 auto 18px;
 
       display: grid;
       place-items: center;
 
-      border: 1px solid rgba(255,255,255,.7);
+      background: transparent;
 
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255,255,255,.12),
-          rgba(255,255,255,.015)
-        );
-
-      box-shadow:
-        0 0 30px rgba(255,255,255,.04),
-        inset 0 0 20px rgba(255,255,255,.025);
-
-      transform: rotate(30deg);
+      filter:
+        drop-shadow(0 0 18px rgba(0,180,255,.12));
 
       animation: logoFloat 5s ease-in-out infinite;
     }
 
-    .logo::before {
-      content: "";
+    .logo img {
+      display: block;
 
-      position: absolute;
-      inset: 7px;
+      width: 82px;
+      height: 82px;
 
-      border: 1px solid rgba(255,255,255,.18);
-    }
+      object-fit: contain;
 
-    .logo span {
-      position: relative;
-
-      transform: rotate(-30deg);
-
-      color: #fff;
-
-      font-size: 24px;
-      font-weight: 900;
-
-      letter-spacing: -4px;
-      text-shadow: 0 0 20px rgba(255,255,255,.25);
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     @keyframes logoFloat {
       0%, 100% {
-        transform: rotate(30deg) translateY(0);
+        transform: translateY(0);
       }
 
       50% {
-        transform: rotate(30deg) translateY(-3px);
+        transform: translateY(-3px);
       }
     }
 
@@ -736,6 +715,16 @@
         font-size: 7px;
       }
 
+      .logo {
+        width: 72px;
+        height: 72px;
+      }
+
+      .logo img {
+        width: 72px;
+        height: 72px;
+      }
+
       .company {
         font-size: 16px;
         letter-spacing: 4px;
@@ -939,13 +928,16 @@
 
         <div
           class="logo"
-          aria-label="회사 로고"
+          aria-label="TDS 회사 로고"
         >
-          <span>N</span>
+          <img
+            src="./tds-logo.png"
+            alt="TDS 로고"
+          >
         </div>
 
         <div class="company">
-          TDS
+          TDSNT
         </div>
 
         <div class="tagline">
@@ -965,7 +957,7 @@
       >
 
         <h1 class="name">
-          kimEunYool
+          Song Yoona
         </h1>
 
         <p class="title">
@@ -1028,7 +1020,7 @@
               href="mailto:nteunyool10@gmail.com"
               aria-label="이메일 보내기"
             >
-              nteunyool10@gmail.com
+              ayun24song@gmail.com
             </a>
           </div>
 
@@ -1049,12 +1041,12 @@
 
             <a
               class="value"
-              href="https://www.youtube.com/@EunYool10"
+              href="https://www.instagram.com/yool2010/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="웹사이트 열기"
+              aria-label="인스타프로필열기"
             >
-             https://www.youtube.com/@EunYool10
+              https://www.instagram.com/yool2010/
             </a>
           </div>
 
@@ -1150,7 +1142,7 @@
        */
       const currentUrl =
         window.location.protocol === "file:"
-          ? "https://www.instagram.com/yool2010/"
+          ? "https://www.instagram.com/oo.nn_a/"
           : window.location.href;
 
       new QRCode(qrElement, {
