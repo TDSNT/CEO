@@ -7,10 +7,8 @@
   <meta name="description" content="TDSNT_은율님명함">
   <meta name="color-scheme" content="dark">
 
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <title>TDSNT_은율님명함</title>
-
-  <!-- Favicon -->
-  <link rel="icon" href="./favicon.ico">
 
   <!-- QR Code Library -->
   <script
@@ -258,41 +256,57 @@
     .logo {
       position: relative;
 
-      width: 82px;
-      height: 82px;
+      width: 62px;
+      height: 62px;
 
       margin: 0 auto 18px;
 
       display: grid;
       place-items: center;
 
-      background: transparent;
+      border: 0;
 
-      filter:
-        drop-shadow(0 0 18px rgba(0,180,255,.12));
+      background: transparent;
+      box-shadow: none;
+
+      transform: rotate(30deg);
 
       animation: logoFloat 5s ease-in-out infinite;
     }
+    .logo::before {
+      display: none;
+    }
 
     .logo img {
+      position: relative;
+      width: 72%;
+      height: 72%;
+      object-fit: contain;\n      background: transparent;
+      transform: rotate(-30deg);
       display: block;
+    }
 
-      width: 82px;
-      height: 82px;
+    .logo span {
+      position: relative;
 
-      object-fit: contain;
+      transform: rotate(-30deg);
 
-      user-select: none;
-      -webkit-user-drag: none;
+      color: #fff;
+
+      font-size: 24px;
+      font-weight: 900;
+
+      letter-spacing: -4px;
+      text-shadow: 0 0 20px rgba(255,255,255,.25);
     }
 
     @keyframes logoFloat {
       0%, 100% {
-        transform: translateY(0);
+        transform: rotate(30deg) translateY(0);
       }
 
       50% {
-        transform: translateY(-3px);
+        transform: rotate(30deg) translateY(-3px);
       }
     }
 
@@ -715,16 +729,6 @@
         font-size: 7px;
       }
 
-      .logo {
-        width: 72px;
-        height: 72px;
-      }
-
-      .logo img {
-        width: 72px;
-        height: 72px;
-      }
-
       .company {
         font-size: 16px;
         letter-spacing: 4px;
@@ -926,14 +930,8 @@
       <!-- BRAND -->
       <header class="brand">
 
-        <div
-          class="logo"
-          aria-label="TDS 회사 로고"
-        >
-          <img
-            src="./tds-logo.png"
-            alt="TDS 로고"
-          >
+        <div class="logo" aria-label="회사 로고">
+          <img src="tds-logo.png" alt="TDS 로고">
         </div>
 
         <div class="company">
@@ -957,11 +955,11 @@
       >
 
         <h1 class="name">
-          Kim EunYool
+          kimEunYool
         </h1>
 
         <p class="title">
-          공동설립자
+          CEO
         </p>
 
         <p class="specialty">
@@ -996,7 +994,7 @@
               href="tel:+8201076378256"
               aria-label="전화 걸기"
             >
-              +82 01092437690
+              +82 01076378256
             </a>
           </div>
 
@@ -1020,7 +1018,7 @@
               href="mailto:nteunyool10@gmail.com"
               aria-label="이메일 보내기"
             >
-             nteunyool10@gmail.com
+              nteunyool10@gmail.com
             </a>
           </div>
 
@@ -1041,12 +1039,12 @@
 
             <a
               class="value"
-              href="https://www.instagram.com/yool2010/"
+              href="https://www.youtube.com/@EunYool10"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="인스타프로필열기"
+              aria-label="웹사이트 열기"
             >
-              https://www.instagram.com/yool2010/
+              www.youtube.com/@EunYool10
             </a>
           </div>
 
@@ -1142,7 +1140,7 @@
        */
       const currentUrl =
         window.location.protocol === "file:"
-          ? "https://www.instagram.com/oo.nn_a/"
+          ? "https://www.instagram.com/yool2010/"
           : window.location.href;
 
       new QRCode(qrElement, {
