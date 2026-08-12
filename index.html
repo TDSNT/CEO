@@ -1,0 +1,1301 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="프리미엄 블랙 세로형 디지털 명함">
+  <meta name="color-scheme" content="dark">
+
+  <title>Premium Digital Business Card</title>
+
+  <!-- QR Code Library -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+    defer>
+  </script>
+
+  <style>
+    :root {
+      --bg: #050505;
+      --card: #0d0d0d;
+      --card-light: #151515;
+
+      --white: #ffffff;
+      --silver: #d8d8d8;
+      --silver-2: #aaa;
+      --muted: #777;
+      --dark-muted: #555;
+
+      --line: rgba(255,255,255,.12);
+      --line-bright: rgba(255,255,255,.28);
+
+      --accent: #ededed;
+
+      --max-width: 440px;
+      --radius: 28px;
+    }
+
+    /* ------------------------------
+       RESET
+    ------------------------------ */
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(255,255,255,.08),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 0% 100%,
+          rgba(255,255,255,.035),
+          transparent 30%
+        ),
+        linear-gradient(
+          145deg,
+          #020202 0%,
+          #101010 50%,
+          #030303 100%
+        );
+
+      color: var(--silver);
+
+      font-family:
+        Inter,
+        "Pretendard",
+        "Noto Sans KR",
+        Arial,
+        sans-serif;
+
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      padding:
+        max(18px, env(safe-area-inset-top))
+        max(12px, env(safe-area-inset-right))
+        max(18px, env(safe-area-inset-bottom))
+        max(12px, env(safe-area-inset-left));
+
+      overflow-x: hidden;
+    }
+
+    /* ------------------------------
+       CARD
+    ------------------------------ */
+
+    .card {
+      position: relative;
+
+      width: min(100%, var(--max-width));
+
+      min-height: calc(100vh - 36px);
+      min-height: calc(100dvh - 36px);
+
+      overflow: hidden;
+
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: var(--radius);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.045),
+          rgba(255,255,255,.008) 35%,
+          rgba(0,0,0,.2) 100%
+        ),
+        linear-gradient(
+          180deg,
+          #111 0%,
+          #080808 55%,
+          #0d0d0d 100%
+        );
+
+      box-shadow:
+        0 40px 100px rgba(0,0,0,.72),
+        0 0 0 1px rgba(255,255,255,.025),
+        inset 0 1px 0 rgba(255,255,255,.08),
+        inset 0 -30px 80px rgba(0,0,0,.35);
+
+      isolation: isolate;
+    }
+
+    /* 메탈 질감 */
+
+    .card::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+        repeating-linear-gradient(
+          115deg,
+          transparent 0,
+          transparent 5px,
+          rgba(255,255,255,.018) 6px,
+          transparent 7px
+        );
+
+      opacity: .7;
+      mix-blend-mode: screen;
+
+      z-index: -1;
+    }
+
+    /* 상단 빛 */
+
+    .card::after {
+      content: "";
+
+      position: absolute;
+
+      top: -160px;
+      left: 50%;
+
+      width: 420px;
+      height: 300px;
+
+      transform: translateX(-50%);
+
+      background:
+        radial-gradient(
+          ellipse,
+          rgba(255,255,255,.11),
+          transparent 68%
+        );
+
+      pointer-events: none;
+      filter: blur(12px);
+
+      z-index: -1;
+    }
+
+    /* ------------------------------
+       DECORATIVE CORNERS
+    ------------------------------ */
+
+    .corner {
+      position: absolute;
+
+      width: 90px;
+      height: 90px;
+
+      border-color: rgba(255,255,255,.42);
+
+      pointer-events: none;
+
+      z-index: 5;
+    }
+
+    .corner.tl {
+      top: 0;
+      left: 0;
+
+      border-top: 1px solid;
+      border-left: 1px solid;
+
+      border-radius: var(--radius) 0 0 0;
+    }
+
+    .corner.br {
+      right: 0;
+      bottom: 0;
+
+      border-right: 1px solid;
+      border-bottom: 1px solid;
+
+      border-radius: 0 0 var(--radius) 0;
+    }
+
+    /* ------------------------------
+       PAGE
+    ------------------------------ */
+
+    .page {
+      position: relative;
+
+      min-height: calc(100vh - 36px);
+      min-height: calc(100dvh - 36px);
+
+      padding:
+        48px
+        28px
+        34px;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ------------------------------
+       BRAND
+    ------------------------------ */
+
+    .brand {
+      text-align: center;
+    }
+
+    .logo {
+      position: relative;
+
+      width: 62px;
+      height: 62px;
+
+      margin: 0 auto 18px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid rgba(255,255,255,.7);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.12),
+          rgba(255,255,255,.015)
+        );
+
+      box-shadow:
+        0 0 30px rgba(255,255,255,.04),
+        inset 0 0 20px rgba(255,255,255,.025);
+
+      transform: rotate(30deg);
+
+      animation: logoFloat 5s ease-in-out infinite;
+    }
+
+    .logo::before {
+      content: "";
+
+      position: absolute;
+      inset: 7px;
+
+      border: 1px solid rgba(255,255,255,.18);
+    }
+
+    .logo span {
+      position: relative;
+
+      transform: rotate(-30deg);
+
+      color: #fff;
+
+      font-size: 24px;
+      font-weight: 900;
+
+      letter-spacing: -4px;
+      text-shadow: 0 0 20px rgba(255,255,255,.25);
+    }
+
+    @keyframes logoFloat {
+      0%, 100% {
+        transform: rotate(30deg) translateY(0);
+      }
+
+      50% {
+        transform: rotate(30deg) translateY(-3px);
+      }
+    }
+
+    .company {
+      color: var(--white);
+
+      font-size: 19px;
+      font-weight: 800;
+
+      letter-spacing: 5px;
+
+      line-height: 1.3;
+    }
+
+    .tagline {
+      margin-top: 8px;
+
+      color: #888;
+
+      font-size: 8px;
+      font-weight: 500;
+
+      letter-spacing: 3px;
+    }
+
+    /* ------------------------------
+       DIVIDER
+    ------------------------------ */
+
+    .divider {
+      position: relative;
+
+      width: 100%;
+      height: 1px;
+
+      margin: 38px auto 44px;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255,255,255,.55),
+          transparent
+        );
+    }
+
+    .divider::after {
+      content: "";
+
+      position: absolute;
+
+      left: 50%;
+      top: 50%;
+
+      width: 5px;
+      height: 5px;
+
+      transform: translate(-50%, -50%) rotate(45deg);
+
+      background: #ddd;
+
+      box-shadow:
+        0 0 12px rgba(255,255,255,.4);
+    }
+
+    /* ------------------------------
+       HERO
+    ------------------------------ */
+
+    .hero {
+      text-align: center;
+    }
+
+    .name {
+      margin: 0;
+
+      color: #fff;
+
+      font-size: clamp(40px, 12vw, 56px);
+
+      line-height: .95;
+
+      font-weight: 850;
+
+      letter-spacing: 1px;
+
+      text-shadow:
+        0 0 35px rgba(255,255,255,.07);
+    }
+
+    .title {
+      margin: 21px 0 0;
+
+      color: #ddd;
+
+      font-size: 13px;
+      font-weight: 600;
+
+      letter-spacing: 3px;
+    }
+
+    .specialty {
+      margin: 11px 0 0;
+
+      color: #777;
+
+      font-size: 8px;
+      font-weight: 500;
+
+      letter-spacing: 2px;
+    }
+
+    /* ------------------------------
+       FLEX SPACER
+    ------------------------------ */
+
+    .spacer {
+      flex: 1;
+      min-height: 54px;
+    }
+
+    /* ------------------------------
+       CONTACT
+    ------------------------------ */
+
+    .contact {
+      display: grid;
+      width: 100%;
+      border-top: 1px solid rgba(255,255,255,.14);
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255,255,255,.025),
+          rgba(255,255,255,0)
+        );
+    }
+
+    .contact-row {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      align-items: center;
+      column-gap: 13px;
+
+      min-height: 62px;
+      padding: 11px 1px;
+
+      border-bottom: 1px solid rgba(255,255,255,.10);
+
+      transition:
+        background .2s ease,
+        padding .2s ease;
+    }
+
+    .contact-row:hover {
+      padding-left: 4px;
+      padding-right: 4px;
+      background: rgba(255,255,255,.018);
+    }
+
+    .contact-info {
+      min-width: 0;
+    }
+
+    .label {
+      margin-bottom: 5px;
+
+      color: #7f7f7f;
+
+      font-size: 7px;
+      font-weight: 800;
+
+      letter-spacing: 2.2px;
+      line-height: 1;
+    }
+
+    .value {
+      display: block;
+
+      color: #d9d9d9;
+
+      font-size: 12px;
+      font-weight: 600;
+
+      line-height: 1.35;
+
+      text-decoration: none;
+
+      word-break: break-word;
+
+      transition:
+        color .2s ease,
+        transform .2s ease;
+    }
+
+    .value:hover {
+      color: #fff;
+    }
+
+    .contact-icon {
+      width: 34px;
+      height: 34px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid rgba(255,255,255,.20);
+      border-radius: 50%;
+
+      color: #bdbdbd;
+
+      background:
+        radial-gradient(
+          circle at 35% 30%,
+          rgba(255,255,255,.06),
+          rgba(255,255,255,.01)
+        );
+
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.05),
+        0 4px 14px rgba(0,0,0,.22);
+    }
+
+    .contact-icon svg {
+      width: 16px;
+      height: 16px;
+
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.45;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+
+      opacity: .92;
+    }
+
+    /* ------------------------------
+       QR PANEL
+    ------------------------------ */
+
+    .qr-panel {
+      margin-top: 18px;
+
+      padding: 17px 16px 14px;
+
+      text-align: center;
+
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 17px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.06),
+          rgba(255,255,255,.012)
+        );
+
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.06),
+        0 15px 35px rgba(0,0,0,.2);
+    }
+
+    .qr-title {
+      color: #d4d4d4;
+
+      font-size: 7px;
+      font-weight: 800;
+
+      letter-spacing: 3.4px;
+      line-height: 1;
+    }
+
+    #qrcode {
+      width: 144px;
+      height: 144px;
+
+      margin: 16px auto 11px;
+
+      padding: 7px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #fff;
+
+      border-radius: 8px;
+
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.6),
+        0 12px 30px rgba(0,0,0,.35);
+    }
+
+    #qrcode img,
+    #qrcode canvas {
+      display: block;
+
+      width: 130px !important;
+      height: 130px !important;
+
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .qr-note {
+      color: #6d6d6d;
+
+      font-size: 6.5px;
+      font-weight: 500;
+
+      letter-spacing: .8px;
+      line-height: 1.4;
+    }
+/* ------------------------------
+       FOOTER
+    ------------------------------ */
+
+    .footer {
+      margin-top: 20px;
+      padding: 0 0 2px;
+
+      text-align: center;
+
+      color: #8a8f9f;
+
+      font-size: 7px;
+      font-weight: 500;
+
+      letter-spacing: 0;
+      line-height: 1.5;
+    }
+
+    /* ------------------------------
+       ACTION BUTTONS
+    ------------------------------ */
+
+    .actions {
+      position: fixed;
+
+      right: 16px;
+      bottom: max(16px, env(safe-area-inset-bottom));
+
+      z-index: 50;
+
+      display: flex;
+      gap: 7px;
+    }
+
+    .actions button {
+      appearance: none;
+
+      border: 1px solid rgba(255,255,255,.2);
+
+      background:
+        rgba(18,18,18,.88);
+
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+
+      color: #ccc;
+
+      padding: 10px 14px;
+
+      border-radius: 999px;
+
+      cursor: pointer;
+
+      font-family: inherit;
+
+      font-size: 10px;
+      font-weight: 600;
+
+      box-shadow:
+        0 8px 28px rgba(0,0,0,.4);
+
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        color .2s ease;
+    }
+
+    .actions button:hover {
+      background: #202020;
+      color: #fff;
+
+      transform: translateY(-2px);
+    }
+
+    .actions button:active {
+      transform: translateY(0);
+    }
+
+    /* ------------------------------
+       MOBILE
+    ------------------------------ */
+
+    @media (max-width: 380px) {
+
+      body {
+        padding: 10px;
+      }
+
+      .card {
+        min-height: calc(100dvh - 20px);
+
+        border-radius: 22px;
+      }
+
+      .page {
+        min-height: calc(100dvh - 20px);
+
+        padding:
+          38px
+          21px
+          28px;
+      }
+
+      . {
+        left: 21px;
+        bottom: 28px;
+        font-size: 7px;
+      }
+
+      .company {
+        font-size: 16px;
+        letter-spacing: 4px;
+      }
+
+      .tagline {
+        font-size: 7px;
+        letter-spacing: 2px;
+      }
+
+      .divider {
+        margin: 32px auto 38px;
+      }
+
+      .name {
+        font-size: 38px;
+      }
+
+      .title {
+        font-size: 11px;
+        letter-spacing: 2px;
+      }
+
+      .specialty {
+        font-size: 7px;
+      }
+
+      .spacer {
+        min-height: 38px;
+      }
+
+      .contact-row {
+        min-height: 56px;
+        grid-template-columns: 34px minmax(0, 1fr);
+        column-gap: 11px;
+      }
+
+      .contact-icon {
+        width: 32px;
+        height: 32px;
+      }
+
+      .contact-icon svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      .value {
+        font-size: 11px;
+      }
+
+      #qrcode {
+        width: 120px;
+        height: 120px;
+        padding: 6px;
+      }
+
+      #qrcode img,
+      #qrcode canvas {
+        width: 108px !important;
+        height: 108px !important;
+      }
+
+      .actions {
+        right: 10px;
+        bottom: 10px;
+      }
+
+      .actions button {
+        padding: 9px 11px;
+      }
+    }
+
+    /* ------------------------------
+       TABLET / DESKTOP
+    ------------------------------ */
+
+    @media (min-width: 700px) {
+
+      body {
+        padding: 42px;
+      }
+
+      .card {
+        min-height: 900px;
+      }
+
+      .page {
+        min-height: 900px;
+
+        padding:
+          58px
+          42px
+          38px;
+      }
+
+      .spacer {
+        min-height: 82px;
+      }
+    }
+
+    /* ------------------------------
+       REDUCED MOTION
+    ------------------------------ */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      .logo {
+        animation: none;
+      }
+
+      .value,
+      .actions button {
+        transition: none;
+      }
+    }
+
+    /* ------------------------------
+       PRINT
+    ------------------------------ */
+
+    @media print {
+
+      @page {
+        size: auto;
+        margin: 0;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+      }
+
+      body {
+        padding: 0;
+
+        background: #090909;
+
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .card {
+        width: 100%;
+        max-width: none;
+
+        min-height: 100vh;
+        min-height: 100dvh;
+
+        border: 0;
+        border-radius: 0;
+
+        box-shadow: none;
+      }
+
+      .page {
+        min-height: 100vh;
+        min-height: 100dvh;
+      }
+
+      .actions {
+        display: flex !important;
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        z-index: 9999;
+      }
+
+      .actions button {
+        color: #ccc !important;
+        background: #111 !important;
+        border: 1px solid #555 !important;
+        box-shadow: none !important;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main
+    class="card"
+    id="businessCard"
+    aria-label="프리미엄 디지털 명함"
+  >
+
+    <div class="corner tl" aria-hidden="true"></div>
+    <div class="corner br" aria-hidden="true"></div>
+
+    <section class="page">
+
+      <!-- BRAND -->
+      <header class="brand">
+
+        <div
+          class="logo"
+          aria-label="회사 로고"
+        >
+          <span>N</span>
+        </div>
+
+        <div class="company">
+          TDS
+        </div>
+
+        <div class="tagline">
+          TECHNOLOGIES / STUDIO / GROUP
+        </div>
+
+      </header>
+
+
+      <div class="divider" aria-hidden="true"></div>
+
+
+      <!-- PERSONAL INFO -->
+      <section
+        class="hero"
+        aria-label="담당자 정보"
+      >
+
+        <h1 class="name">
+          kimEunYool
+        </h1>
+
+        <p class="title">
+          CEO
+        </p>
+
+        <p class="specialty">
+          SPECIALTY · EXPERTISE · KEYWORD
+        </p>
+
+      </section>
+
+
+      <div class="spacer"></div>
+
+
+      <!-- CONTACT -->
+      <section
+        class="contact"
+        aria-label="연락처"
+      >
+
+        <div class="contact-row">
+
+          <div class="contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M7.4 3.7l2.2 3.9-1.9 1.6c1.1 2.2 2.9 4 5.1 5.1l1.6-1.9 3.9 2.2c.6.3.9.9.8 1.6l-.4 2.2c-.1.7-.7 1.2-1.4 1.2C10.1 19.6 4.4 13.9 4.4 6.7c0-.7.5-1.3 1.2-1.4l2.2-.4c.7-.1 1.3.2 1.6.8z"/>
+            </svg>
+          </div>
+
+          <div class="contact-info">
+            <div class="label">PHONE</div>
+
+            <a
+              class="value"
+              href="tel:+8201076378256"
+              aria-label="전화 걸기"
+            >
+              +82 01076378256
+            </a>
+          </div>
+
+        </div>
+
+
+        <div class="contact-row">
+
+          <div class="contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <rect x="3" y="5.5" width="18" height="13" rx="2"/>
+              <path d="M4.5 7l7.5 6 7.5-6"/>
+            </svg>
+          </div>
+
+          <div class="contact-info">
+            <div class="label">EMAIL</div>
+
+            <a
+              class="value"
+              href="mailto:nteunyool10@gmail.com"
+              aria-label="이메일 보내기"
+            >
+              nteunyool10@gmail.com
+            </a>
+          </div>
+
+        </div>
+
+
+        <div class="contact-row">
+
+          <div class="contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <circle cx="12" cy="12" r="8.5"/>
+              <path d="M3.8 9.2h16.4M3.8 14.8h16.4M12 3.5c2 2.2 3 5.1 3 8.5s-1 6.3-3 8.5M12 3.5c-2 2.2-3 5.1-3 8.5s1 6.3 3 8.5"/>
+            </svg>
+          </div>
+
+          <div class="contact-info">
+            <div class="label">WEBSITE</div>
+
+            <a
+              class="value"
+              href="https://www.company.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="웹사이트 열기"
+            >
+              www.company.com
+            </a>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- QR -->
+      <section
+        class="qr-panel"
+        aria-label="QR 코드"
+      >
+
+        <div class="qr-title">
+          SCAN TO CONNECT
+        </div>
+
+        <div
+          id="qrcode"
+          aria-label="명함 공유 QR 코드"
+        ></div>
+
+        <div class="qr-note">
+          스마트폰 카메라로 스캔하여 명함을 공유하세요.
+        </div>
+
+      </section>
+<footer class="footer">
+        © 2026 TDSNT. All rights reserved.
+      </footer>
+
+    </section>
+  </main>
+
+
+  <!-- ACTIONS -->
+  <div class="actions">
+
+    <button
+      type="button"
+      id="printButton"
+      aria-label="명함 인쇄 또는 PDF 저장"
+    >
+      인쇄 / PDF
+    </button>
+
+    <button
+      type="button"
+      id="shareButton"
+      aria-label="명함 공유"
+    >
+      공유
+    </button>
+
+  </div>
+
+
+  <script>
+    "use strict";
+
+    /*
+     * QR CODE
+     * 현재 페이지 주소를 QR 코드로 생성합니다.
+     */
+    function createQRCode() {
+
+      const qrElement = document.getElementById("qrcode");
+
+      if (!qrElement) {
+        return;
+      }
+
+      /*
+       * QR 라이브러리가 아직 로드되지 않은 경우
+       * 잠시 후 다시 시도합니다.
+       */
+      if (typeof QRCode === "undefined") {
+
+        setTimeout(createQRCode, 200);
+
+        return;
+      }
+
+      qrElement.innerHTML = "";
+
+      /*
+       * 일반 웹페이지에서는 현재 주소를 사용합니다.
+       *
+       * file:// 로 직접 열었을 경우에는
+       * 실제 공유 가능한 주소가 없으므로
+       * 회사 홈페이지를 기본값으로 사용합니다.
+       */
+      const currentUrl =
+        window.location.protocol === "file:"
+          ? "https://www.instagram.com/yool2010/"
+          : window.location.href;
+
+      new QRCode(qrElement, {
+        text: currentUrl,
+        width: 130,
+        height: 130,
+
+        colorDark: "#111111",
+        colorLight: "#ffffff",
+
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+
+    /*
+     * SHARE
+     */
+    async function shareCard() {
+      /*
+       * HTTPS/localhost 환경에서는 Web Share API를 사용합니다.
+       * file:// 로 직접 실행한 경우에는 브라우저 정책상
+       * navigator.share가 제한될 수 있으므로 주소 복사를 사용합니다.
+       */
+      const pageUrl = window.location.href;
+
+      const shareData = {
+        title: document.title,
+        text: "Premium Digital Business Card",
+        url: pageUrl
+      };
+
+      if (
+        window.isSecureContext &&
+        typeof navigator.share === "function"
+      ) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (error) {
+          if (error && error.name === "AbortError") {
+            return;
+          }
+          console.warn("Web Share API 실패:", error);
+        }
+      }
+
+      /*
+       * Clipboard API
+       */
+      if (
+        navigator.clipboard &&
+        typeof navigator.clipboard.writeText === "function"
+      ) {
+        try {
+          await navigator.clipboard.writeText(pageUrl);
+          alert("명함 페이지 주소가 클립보드에 복사되었습니다.");
+          return;
+        } catch (error) {
+          console.warn("Clipboard API 실패:", error);
+        }
+      }
+
+      /*
+       * 구형 브라우저 fallback
+       */
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = pageUrl;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        textarea.style.top = "0";
+
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        const copied = document.execCommand("copy");
+        textarea.remove();
+
+        if (copied) {
+          alert("명함 페이지 주소가 클립보드에 복사되었습니다.");
+          return;
+        }
+      } catch (error) {
+        console.warn("복사 fallback 실패:", error);
+      }
+
+      /*
+       * 복사도 불가능한 환경
+       */
+      window.prompt(
+        "아래 주소를 복사해주세요.",
+        pageUrl
+      );
+    }
+
+
+    /*
+     * PRINT
+     */
+    function printCard() {
+      try {
+        window.focus();
+        window.print();
+      } catch (error) {
+        console.error("인쇄 실행 실패:", error);
+        alert("인쇄 기능을 실행할 수 없습니다. 브라우저의 인쇄 기능을 이용해주세요.");
+      }
+    }
+
+
+    /*
+     * EVENTS
+     */
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const shareButton =
+        document.getElementById("shareButton");
+
+      const printButton =
+        document.getElementById("printButton");
+
+
+      if (shareButton) {
+
+        shareButton.addEventListener(
+          "click",
+          shareCard
+        );
+
+      }
+
+
+      if (printButton) {
+
+        printButton.addEventListener(
+          "click",
+          printCard
+        );
+
+      }
+
+
+      createQRCode();
+
+    });
+  </script>
+
+</body>
+</html>
